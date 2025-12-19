@@ -5,7 +5,7 @@ on common best security practices.
 
 WARNING: This project is a work in progress and under active development.
 
---
+
 
 ## Features
   - Checks password length
@@ -14,7 +14,7 @@ WARNING: This project is a work in progress and under active development.
   - Provides security score percentage based on the above checks ^
   - Simple graphical user interface built with Tkinter
 
---
+
 
 ## Upcoming Features
   - Generate an encrypted file containing password with security info and tips to improve
@@ -24,7 +24,7 @@ WARNING: This project is a work in progress and under active development.
   - Provide password suggestions within the encrypted summary file that provides security
   improvements that may have been lacking
 
---
+
 
 ## How To Run
   1. Clone the repository
