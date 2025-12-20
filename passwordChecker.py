@@ -181,18 +181,33 @@ class UserInterface:
 
 class reportFile:
     
+    def __init__(self):
+        self.ui = ui
+        pass
+
     def generateFile(self, window):
-        self.fileButton = tk.Button(window, text="click here to generate a security report")
+        self.fileButton = tk.Button(window, text="click here to generate a security report", command=self.encryptionPrompt)
         self.fileButton.place(x=65,y=250)
         pass
 
     def destroyFileButton(self):
+        #destoys fileButton when user attempts to try another password
         self.fileButton.destroy()
         pass
 
     def encryptionPrompt(self):
+        ui = self.ui
+
+        # destroy results UI
+        ui.label.destroy()
+        ui.rbutton.destroy()
+        ui.pc.destroyReport()
+        self.destroyFileButton()
+
+        #prompts user for encryption password
         
-        pass
+
+    pass
 
     
 
