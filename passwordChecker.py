@@ -8,6 +8,7 @@ class PasswordChecker:
         self.rating = 0
         self.password = password
         self.window = window
+        self.file_path = "securityReport.txt"
 
         pass
 
@@ -139,6 +140,10 @@ class UserInterface:
         #displays button to try password again
         self.rbutton = tk.Button(self.window, text="click here to try again", command=self.resetButton)
         self.rbutton.place(x=115,y=210)
+
+        #displays fileButton
+        self.fileGen = reportFile()
+        self.fileGen.generateFile(self.window)
     
     def resetButton(self):
             rbuttonClicked = self.rbuttonClicked
@@ -157,6 +162,12 @@ class UserInterface:
             self.pc.special_label.destroy()
             self.pc.rating_label.destroy()
 
+            #destroy fileButton
+            self.fileGen.destroyFileButton()
+    
+            
+            
+
     def prevent_returnKey(self, event):
         self.resultsPage()
         return "break"
@@ -168,6 +179,22 @@ class UserInterface:
             return "break"
     #^^ allow super+a at character limit ^^
 
+class reportFile:
+    
+    def generateFile(self, window):
+        self.fileButton = tk.Button(window, text="click here to generate a security report")
+        self.fileButton.place(x=65,y=250)
+        pass
+
+    def destroyFileButton(self):
+        self.fileButton.destroy()
+        pass
+
+    def encryptionPrompt(self):
+        
+        pass
+
+    
 
 ui = UserInterface()
 ui.initialButton()
