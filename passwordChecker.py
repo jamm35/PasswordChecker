@@ -186,7 +186,7 @@ class reportFile:
         pass
 
     def generateFile(self, window):
-        self.fileButton = tk.Button(window, text="click here to generate a security report", command=self.encryptionPrompt)
+        self.fileButton = tk.Button(window, text="click here to generate a security report", command=self.destroyResultsPage)
         self.fileButton.place(x=65,y=250)
         pass
 
@@ -195,7 +195,7 @@ class reportFile:
         self.fileButton.destroy()
         pass
 
-    def encryptionPrompt(self):
+    def destroyResultsPage(self):
         ui = self.ui
 
         # destroy results UI
@@ -204,10 +204,27 @@ class reportFile:
         ui.pc.destroyReport()
         self.destroyFileButton()
 
-        #prompts user for encryption password
+        self.encryptionPromptPage()
+        
+    
+    def encryptionPromptPage(self):
+        
+        #displays textbox for user to input encryption password
+        self.encryptPassTextBox = Text(ui.window, borderwidth=3, relief="solid", width=40, height=1)
+        self.encryptPassTextBox.place(x=60, y=150)
+
+        #provides user with info on what textbox is for
+        self.encryptLabel = tk.Label(ui.window, text="Please Provide An Encrption Password For Your Report File.")
+        self.encryptLabel.place(x=25,y=110)
+        
+        #button to submit encryption password
+        self.encryptButton = tk.Button(ui.window, text="Click Here To Generate File Report With Encryption Password")
+        self.encryptButton.place(x=5,y=210)
+
+        
         
 
-    pass
+
 
     
 
