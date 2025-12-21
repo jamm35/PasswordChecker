@@ -183,6 +183,7 @@ class reportFile:
     
     def __init__(self):
         self.ui = ui
+        self.encryptErrorLabel = None
         pass
 
     def generateFile(self, window):
@@ -218,8 +219,33 @@ class reportFile:
         self.encryptLabel.place(x=25,y=110)
         
         #button to submit encryption password
-        self.encryptButton = tk.Button(ui.window, text="Click Here To Generate File Report With Encryption Password")
+        self.encryptButton = tk.Button(ui.window, text="Click Here To Generate File Report With Encryption Password", command=self.checkEncryptionPassword)
         self.encryptButton.place(x=5,y=210)
+    
+        #stores users encryption password
+        self.encryptionPassword = self.encryptPassTextBox.get('1.0', 'end-1c')
+
+
+    
+    def checkEncryptionPassword(self):
+        #checks if user actually created a password or not
+        if len(self.encryptPassTextBox.get('1.0', 'end-1c')) == 0:
+            #ensures label is deleted if user presses button multiple times to generate multiple labels
+            if self.encryptErrorLabel is not None:
+                self.encryptErrorLabel.destroy()
+                self.encryptErrorLabel = None
+        
+            self.encryptErrorLabel = tk.Label(ui.window, text="An Encryption Password Is Required To Proceed With File Creation.")
+            self.encryptErrorLabel.place(x=5,y=80)
+        else:
+            #destroys previous label if it was generated
+            if self.encryptErrorLabel is not None:
+                self.encryptErrorLabel.destroy()
+                self.encryptErrorLabel = None
+
+            self.encryptErrorLabel = tk.Label(ui.window, text="working")
+            self.encryptErrorLabel.place(x=180,y=80)
+
 
         
         
