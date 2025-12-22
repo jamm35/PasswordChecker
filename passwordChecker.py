@@ -258,6 +258,13 @@ class reportFile:
         self.verifyLabel = tk.Label(ui.window, text='File Has Been Created In Current Directory.')
         self.verifyLabel.place(x=80,y=110)
 
+        self.closeProgram = tk.Button(ui.window, text="Click Here To Close Program",command=self.exitProgram)
+        self.closeProgram.place(x=105,y=210)
+    
+    def exitProgram(self):
+        self.ui.window.destroy()
+        pass
+
 class encryptedFile:
     def __init__(self):
         pass
