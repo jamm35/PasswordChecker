@@ -214,6 +214,10 @@ class reportFile:
         self.encryptPassTextBox = Text(ui.window, borderwidth=3, relief="solid", width=40, height=1)
         self.encryptPassTextBox.place(x=60, y=150)
 
+        #prevents user from using the return key
+
+        #limits user to 40 characters
+
         #provides user with info on what textbox is for
         self.encryptLabel = tk.Label(ui.window, text="Please Provide An Encrption Password For Your Report File.")
         self.encryptLabel.place(x=25,y=110)
@@ -243,8 +247,28 @@ class reportFile:
                 self.encryptErrorLabel.destroy()
                 self.encryptErrorLabel = None
 
-            self.encryptErrorLabel = tk.Label(ui.window, text="working")
-            self.encryptErrorLabel.place(x=180,y=80)
+            self.verifyFileCreation()
+    
+    def verifyFileCreation(self):
+        #destroys encryptionPrompt UI
+        self.encryptPassTextBox.destroy()
+        self.encryptLabel.destroy()
+        self.encryptButton.destroy()
+
+        self.verifyLabel = tk.Label(ui.window, text='File Has Been Created In Current Directory.')
+        self.verifyLabel.place(x=80,y=110)
+
+class encryptedFile:
+    def __init__(self):
+        pass
+
+    def fileContents(self):
+        pass
+
+    def encryption(self):
+        pass
+
+
 
 
         
