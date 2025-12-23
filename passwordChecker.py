@@ -1,6 +1,7 @@
 import re
 from tkinter import * # imports everything from tkinter
 import tkinter as tk
+import os
 
 class PasswordChecker:
     
@@ -262,6 +263,8 @@ class reportFile:
         self.closeProgram.place(x=105,y=210)
     
     def exitProgram(self):
+        self.mFile = encryptedFile()
+        self.mFile.fileContents()
         self.ui.window.destroy()
         pass
 
@@ -270,20 +273,18 @@ class encryptedFile:
         pass
 
     def fileContents(self):
-        pass
+        txt_data = "I like oranges"
+
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(base_dir, "output.txt")
+
+        with open(file_path, 'w') as file:
+            file.write(txt_data)
+            print(f"txt file {file_path} was created.")
 
     def encryption(self):
         pass
 
-
-
-
-        
-        
-
-
-
-    
 
 ui = UserInterface()
 ui.initialButton()
