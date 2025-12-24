@@ -1,7 +1,5 @@
-import re
 from tkinter import * # imports everything from tkinter
 import tkinter as tk
-import os
 
 class PasswordChecker:
     
@@ -14,13 +12,15 @@ class PasswordChecker:
         pass
 
     def length_check(self):
-        if len(self.password) >= 16:
-            self.length_label = tk.Label(self.window, text="good length!")
-            self.length_label.place(x=100,y=0)
+        self.length_number = len(self.password)
+
+        if  self.length_number >= 16:
+            self.length_label = tk.Label(self.window, text=f"Password Has {self.length_number} characters. Good!")
+            self.length_label.place(x=0,y=0)
             self.rating+=1
         else:
-            self.length_label = tk.Label(self.window, text="bad length.")
-            self.length_label.place(x=100,y=0)
+            self.length_label = tk.Label(self.window, text=f"Password Has {self.length_number} characters. Use 16 Characters or More.")
+            self.length_label.place(x=0,y=0)
 
     def lowercase_check(self):
         lower = []
@@ -28,11 +28,11 @@ class PasswordChecker:
             if i.islower():
                 lower.append(i)
         if not lower:
-            self.lowercase_label = tk.Label(self.window, text='bad lowercase')
-            self.lowercase_label.place(x=100,y=20)
+            self.lowercase_label = tk.Label(self.window, text='Password Has 0 Lowercase Letters. Not Good.')
+            self.lowercase_label.place(x=0,y=20)
         else:
-            self.lowercase_label = tk.Label(self.window, text='good lowercase')
-            self.lowercase_label.place(x=100,y=20)
+            self.lowercase_label = tk.Label(self.window, text=f"Password Has {len(lower)} Lowercase Letters. Good!")
+            self.lowercase_label.place(x=0,y=20)
             self.rating+=1
     
     def uppercase_check(self):
@@ -41,21 +41,24 @@ class PasswordChecker:
             if i.isupper():
                 upper.append(i)
         if not upper:
-            self.upper_label = tk.Label(self.window, text='bad uppercase')
-            self.upper_label.place(x=100,y=40)
+            self.upper_label = tk.Label(self.window, text='Password Has 0 Uppercase Letters. Not Good.')
+            self.upper_label.place(x=0,y=40)
         else:
-            self.upper_label = tk.Label(self.window, text='good uppercase')
-            self.upper_label.place(x=100,y=40)
+            self.upper_label = tk.Label(self.window, text=f"Password Has {len(upper)} Uppercase Letters. Good!")
+            self.upper_label.place(x=0,y=40)
             self.rating+=1
     
     def number_check(self):
-        numbers =  re.findall(r'\d+', self.password)
+        numbers = []
+        for i in self.password:
+            if i.isdigit():
+                numbers.append(i)
         if not numbers:
-            self.numbers_label = tk.Label(self.window, text='bad numbers')
-            self.numbers_label.place(x=100,y=60)
+            self.numbers_label = tk.Label(self.window, text='Password Has 0 Numbers. Not Good.')
+            self.numbers_label.place(x=0,y=60)
         else:
-            self.numbers_label = tk.Label(self.window, text='good numbers')
-            self.numbers_label.place(x=100,y=60)
+            self.numbers_label = tk.Label(self.window, text=f"Password Has {len(numbers)} Numbers. Good!")
+            self.numbers_label.place(x=0,y=60)
             self.rating+=1
     
     def specialChar_check(self):
@@ -65,19 +68,19 @@ class PasswordChecker:
             if i in special_characters:
                 user_sc.append(i)
         if not user_sc:
-            self.special_label = tk.Label(self.window, text='bad special characters')
-            self.special_label.place(x=100,y=80)
+            self.special_label = tk.Label(self.window, text='Password has 0 Special Characters. Not Good.')
+            self.special_label.place(x=0,y=80)
         else:
-            self.special_label = tk.Label(self.window, text='good special characters')
-            self.special_label.place(x=100,y=80)
+            self.special_label = tk.Label(self.window, text=f"Password Has {len(user_sc)} Special Characters. Good!")
+            self.special_label.place(x=0,y=80)
             self.rating+=1
     
     def rating_system(self):
         division = self.rating / 5
         percentage = division * 100
         percentage = str(percentage)
-        self.rating_label = tk.Label(self.window, text=f"overall security score: {percentage}%")
-        self.rating_label.place(x=100,y=100)
+        self.rating_label = tk.Label(self.window, text=f"Overall Security Score: {percentage}%")
+        self.rating_label.place(x=0,y=100)
     
     def destroyReport(self):
         self.length_label.destroy()
@@ -86,15 +89,6 @@ class PasswordChecker:
         self.numbers_label.destroy()
         self.special_label.destroy()
         self.rating_label.destroy()
-
-#test cases for PasswordChecker class
-# checker = PasswordChecker()
-# checker.length_check()
-# checker.lowercase_check()
-# checker.uppercase_check()
-# checker.number_check()
-# checker.specialChar_check()
-# checker.rating_system()
 
 class UserInterface:
     def __init__(self):
@@ -105,7 +99,7 @@ class UserInterface:
     pass
 
     def initialButton(self):
-        self.turn_on = tk.Button(self.window, text="check your password", command=self.resultsPage)
+        self.turn_on = tk.Button(self.window, text="Check Your Password", command=self.resultsPage)
         self.turn_on.place(x=115,y=210)
         
 
@@ -135,16 +129,17 @@ class UserInterface:
         self.pc.specialChar_check()
         self.pc.rating_system()
         
-
+        #displays users password
         self.label = tk.Label(self.window, text=self.password)
         self.label.place(x=150,y=150)
+
         #displays button to try password again
-        self.rbutton = tk.Button(self.window, text="click here to try again", command=self.resetButton)
+        self.rbutton = tk.Button(self.window, text="Click Here To Try Again", command=self.resetButton)
         self.rbutton.place(x=115,y=210)
 
-        #displays fileButton
-        self.fileGen = reportFile()
-        self.fileGen.generateFile(self.window)
+        #displays button to close program
+        self.close = tk.Button(self.window, text="Click Here To Close Program", command=self.close_program)
+        self.close.place(x=100, y=250)
     
     def resetButton(self):
             rbuttonClicked = self.rbuttonClicked
@@ -162,13 +157,8 @@ class UserInterface:
             self.pc.numbers_label.destroy()
             self.pc.special_label.destroy()
             self.pc.rating_label.destroy()
-
-            #destroy fileButton
-            self.fileGen.destroyFileButton()
+            self.close.destroy()
     
-            
-            
-
     def prevent_returnKey(self, event):
         self.resultsPage()
         return "break"
@@ -180,110 +170,8 @@ class UserInterface:
             return "break"
     #^^ allow super+a at character limit ^^
 
-class reportFile:
-    
-    def __init__(self):
-        self.ui = ui
-        self.encryptErrorLabel = None
-        pass
-
-    def generateFile(self, window):
-        self.fileButton = tk.Button(window, text="click here to generate a security report", command=self.destroyResultsPage)
-        self.fileButton.place(x=65,y=250)
-        pass
-
-    def destroyFileButton(self):
-        #destoys fileButton when user attempts to try another password
-        self.fileButton.destroy()
-        pass
-
-    def destroyResultsPage(self):
-        ui = self.ui
-
-        # destroy results UI
-        ui.label.destroy()
-        ui.rbutton.destroy()
-        ui.pc.destroyReport()
-        self.destroyFileButton()
-
-        self.encryptionPromptPage()
-        
-    
-    def encryptionPromptPage(self):
-        
-        #displays textbox for user to input encryption password
-        self.encryptPassTextBox = Text(ui.window, borderwidth=3, relief="solid", width=40, height=1)
-        self.encryptPassTextBox.place(x=60, y=150)
-
-        #prevents user from using the return key
-
-        #limits user to 40 characters
-
-        #provides user with info on what textbox is for
-        self.encryptLabel = tk.Label(ui.window, text="Please Provide An Encrption Password For Your Report File.")
-        self.encryptLabel.place(x=25,y=110)
-        
-        #button to submit encryption password
-        self.encryptButton = tk.Button(ui.window, text="Click Here To Generate File Report With Encryption Password", command=self.checkEncryptionPassword)
-        self.encryptButton.place(x=5,y=210)
-    
-        #stores users encryption password
-        self.encryptionPassword = self.encryptPassTextBox.get('1.0', 'end-1c')
-
-
-    
-    def checkEncryptionPassword(self):
-        #checks if user actually created a password or not
-        if len(self.encryptPassTextBox.get('1.0', 'end-1c')) == 0:
-            #ensures label is deleted if user presses button multiple times to generate multiple labels
-            if self.encryptErrorLabel is not None:
-                self.encryptErrorLabel.destroy()
-                self.encryptErrorLabel = None
-        
-            self.encryptErrorLabel = tk.Label(ui.window, text="An Encryption Password Is Required To Proceed With File Creation.")
-            self.encryptErrorLabel.place(x=5,y=80)
-        else:
-            #destroys previous label if it was generated
-            if self.encryptErrorLabel is not None:
-                self.encryptErrorLabel.destroy()
-                self.encryptErrorLabel = None
-
-            self.verifyFileCreation()
-    
-    def verifyFileCreation(self):
-        #destroys encryptionPrompt UI
-        self.encryptPassTextBox.destroy()
-        self.encryptLabel.destroy()
-        self.encryptButton.destroy()
-
-        self.verifyLabel = tk.Label(ui.window, text='File Has Been Created In Current Directory.')
-        self.verifyLabel.place(x=80,y=110)
-
-        self.closeProgram = tk.Button(ui.window, text="Click Here To Close Program",command=self.exitProgram)
-        self.closeProgram.place(x=105,y=210)
-    
-    def exitProgram(self):
-        self.mFile = encryptedFile()
-        self.mFile.fileContents()
-        self.ui.window.destroy()
-        pass
-
-class encryptedFile:
-    def __init__(self):
-        pass
-
-    def fileContents(self):
-        txt_data = "I like oranges"
-
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        file_path = os.path.join(base_dir, "output.txt")
-
-        with open(file_path, 'w') as file:
-            file.write(txt_data)
-            print(f"txt file {file_path} was created.")
-
-    def encryption(self):
-        pass
+    def close_program(self):
+        self.window.destroy()
 
 
 ui = UserInterface()
