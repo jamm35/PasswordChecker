@@ -22,6 +22,10 @@ WARNING: This project is a work in progress and under active development.
   - Allow users to use super+a to select all characters at character limit
   - Improved UI design
   - Provide password suggestions with security improvements that may have been lacking
+  - Make some criteria worth more than others instead of them being all equal weight
+    when calculating security score percentage
+  - Establish an array of common passwords and if user inputs one of these passwords
+    the security score immediately sets to 0%
 
 
 
